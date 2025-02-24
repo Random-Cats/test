@@ -34,9 +34,10 @@ async function handleCatButtonClick() {
     
     // Update CountAPI (global count)
     try {
-        const response = await fetch('https://api.countapi.xyz/hit/your-namespace/catButton');
-        const data = await response.json();
-        document.getElementById('globalClickCounter').textContent = data.value;
+        fetch('https://api.countapi.xyz/hit/your-namespace/catButton').then(async response=>{
+            const data = await response.json();
+            document.getElementById('globalClickCounter').textContent = data.value;
+        })
     } catch (error) {
         console.error('Error updating global click count:', error);
     }
@@ -77,7 +78,7 @@ window.onload = async () => {
     document.getElementById('localClickCounter').textContent = localClicks;
 
     try {
-        const response = await fetch('https://api.countapi.xyz/get/https://random-cats.github.io/test/catButton');
+        const response = await fetch('https://api.countapi.xyz/get/random-cats.github.io/test/catButton');
         const data = await response.json();
         document.getElementById('globalClickCounter').textContent = data.value;
     } catch (error) {
@@ -90,12 +91,13 @@ window.onload = async () => {
 
 async function getAllImageUrls() {
 
-    let req= fetch('paths.txt');
-    let text = req.text();
-
-    return text;
+    let req = await fetch('paths.txt');
+    let text = await req.text();
+    return text.split('\n').filter(e=>e);
 
 }
+
+
 
 
 
