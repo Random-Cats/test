@@ -34,7 +34,7 @@ async function handleCatButtonClick() {
     
     // Update CountAPI (global count)
     try {
-        const response = await fetch('https://api.countapi.xyz/hit/your-namespace/catButton');
+        const response = await fetch('https://msouthwick.com/command.add-cat-click');
         const data = await response.json();
         document.getElementById('globalClickCounter').textContent = data.value;
     } catch (error) {
@@ -77,8 +77,8 @@ window.onload = async () => {
     document.getElementById('localClickCounter').textContent = localClicks;
 
     try {
-        const response = await fetch('https://api.countapi.xyz/get/https://random-cats.github.io/test/catButton');
-        const data = await response.json();
+        const response = await fetch('https://msouthwick.com/command.cat-clicks');
+        const data = await response.text();
         document.getElementById('globalClickCounter').textContent = data.value;
     } catch (error) {
         console.error('Error fetching global click count:', error);
@@ -98,5 +98,36 @@ async function getAllImageUrls() {
 }
 
 
+// In your JavaScript file
+function toggleTheme() {
+    document.body.classList.toggle('light-mode');
+    localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
+}
+
+// On page load, check saved preference
+document.addEventListener('DOMContentLoaded', () => {
+    if (localStorage.getItem('theme') === 'light') {
+        document.body.classList.add('light-mode');
+    }
+});
 
 
+
+function downloadCurrentImage() {
+    // Get the current image
+    const img = document.getElementById('catImage');
+    const imgUrl = img.src;
+
+    // Create a temporary link
+    const link = document.createElement('a');
+    link.href = imgUrl;
+    
+    // Get the filename from the URL
+    const filename = imgUrl.split('/').pop();
+    link.download = filename;
+    
+    // Trigger download
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+}
