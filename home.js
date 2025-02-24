@@ -36,6 +36,7 @@ async function handleCatButtonClick() {
         return; // Ignore clicks that are too fast
     }
     lastClickTime = now;
+    showRandomCatImage();
 
     // Update local storage count
     let localClicks = parseInt(localStorage.getItem('catButtonClicks') || '0');
@@ -55,7 +56,6 @@ async function handleCatButtonClick() {
     document.getElementById('localClickCounter').textContent = localClicks;
 
     // Handle image selection
-    await showRandomCatImage();
 }
 
 async function showRandomCatImage() {
@@ -106,11 +106,14 @@ function displayGlobalClicks(n){
     }
 }
 
+getAllImageUrls();
+
 async function getAllImageUrls() {
     if(images.length == 0){
-        let req = await fetch('paths.txt');
+        let req = await fetch('paths.txt', { cache: "no-store" });
         let text = await req.text();
         images = text.split('\n').filter(e=>e);
+        document.querySelector('#total_images').innerHTML = images.length;
         return images;
     } else {
         return images;
