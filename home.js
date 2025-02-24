@@ -67,7 +67,7 @@ async function showRandomCatImage() {
     setCookie('seenImages', Array.from(seenImages).join(','), COOKIE_EXPIRY_DAYS);
 
     // Display the image
-    document.getElementById('catImage').src = selectedImage;
+    document.getElementById('catImage').src = 'Cat-Imgs/'+selectedImage;
 }
 
 // Initial setup
@@ -87,4 +87,16 @@ window.onload = async () => {
     // Add click handler
     document.getElementById('catButton').addEventListener('click', handleCatButtonClick);
 };
+
+async function getAllImageUrls() {
+
+    let req= fetch('paths.txt');
+    let text = req.text();
+
+    return text;
+
+}
+
+
+
 
