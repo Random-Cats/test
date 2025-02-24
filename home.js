@@ -131,3 +131,11 @@ function downloadCurrentImage() {
     link.click();
     document.body.removeChild(link);
 }
+
+
+
+
+
+
+
+

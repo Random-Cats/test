@@ -1,18 +1,9 @@
 
-:root {
-    --bg-color: #1a1a1a;
-    --text-color: #ffffff;
-  }
-  
-  body {
-    background-color: var(--bg-color);
-    color: var(--text-color);
-  }
-  
-  .light-mode {
-    --bg-color: #ffffff;
-    --text-color: #1a1a1a;
-  }
+
+body.light-mode {
+    background-color: #ffffff;
+    color: #1a1a1a;
+}
 
 body {
     font-family: 'Arial', sans-serif;
@@ -21,7 +12,9 @@ body {
     align-items: center;
     min-height: 100vh;
     margin: 0;
-    background-color: #f0f2f5;
+    background-color: #1a1a1a;
+    color: #ffffff;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 .container {
