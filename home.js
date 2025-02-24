@@ -1,3 +1,10 @@
+
+console.log("JavaScript is running");
+
+document.addEventListener('DOMContentLoaded', () => {
+    console.log("DOM is loaded");
+});
+
 // Configuration
 const RATE_LIMIT_MS = 100; // Minimum time between clicks (10 clicks per second max)
 const COOKIE_EXPIRY_DAYS = 1;
@@ -7,6 +14,8 @@ let lastClickTime = 0;
 
 // Initialize seen images set from cookie on load
 let seenImages = new Set(getCookie('seenImages')?.split(',').filter(Boolean) || []);
+
+let images = [];
 
 function getCookie(name) {
     const value = `; ${document.cookie}`;
@@ -34,9 +43,10 @@ async function handleCatButtonClick() {
     
     // Update CountAPI (global count)
     try {
-        const response = await fetch('https://msouthwick.com/command.add-cat-click');
-        const data = await response.json();
-        document.getElementById('globalClickCounter').textContent = data.value;
+        fetch('https://msouthwick.com/command.add-cat-click').then(async response=>{
+            const data = await response.text();
+            displayGlobalClicks(data);
+        });
     } catch (error) {
         console.error('Error updating global click count:', error);
     }
@@ -50,7 +60,7 @@ async function handleCatButtonClick() {
 
 async function showRandomCatImage() {
     // This assumes you have an array of all possible image URLs
-    const allImages = await getAllImageUrls(); // You'll need to implement this based on your GitHub structure
+    const allImages = await getAllImageUrls(); 
     
     // Reset if all images have been seen
     if (seenImages.size >= allImages.length) {
@@ -76,25 +86,35 @@ window.onload = async () => {
     const localClicks = localStorage.getItem('catButtonClicks') || '0';
     document.getElementById('localClickCounter').textContent = localClicks;
 
-    try {
-        const response = await fetch('https://msouthwick.com/command.cat-clicks');
-        const data = await response.text();
-        document.getElementById('globalClickCounter').textContent = data.value;
-    } catch (error) {
-        console.error('Error fetching global click count:', error);
-    }
+    displayGlobalClicks();
 
     // Add click handler
     document.getElementById('catButton').addEventListener('click', handleCatButtonClick);
 };
 
+function displayGlobalClicks(n){
+    if(n){
+        document.getElementById('globalClickCounter').textContent = n + ' as of '+new Date().toLocaleTimeString({hour12:true});
+    }
+    try {
+        fetch('https://msouthwick.com/command.cat-clicks').then(async response=>{
+            const data = await response.text();
+            document.getElementById('globalClickCounter').textContent = data + ' as of '+new Date().toLocaleTimeString({hour12:true});
+        })
+    } catch (error) {
+        console.error('Error fetching global click count:', error);
+    }
+}
+
 async function getAllImageUrls() {
-
-    let req= fetch('paths.txt');
-    let text = req.text();
-
-    return text;
-
+    if(images.length == 0){
+        let req = await fetch('paths.txt');
+        let text = await req.text();
+        images = text.split('\n').filter(e=>e);
+        return images;
+    } else {
+        return images;
+    }
 }
 
 
