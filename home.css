@@ -17,7 +17,7 @@ body {
     transition: background-color 0.3s, color 0.3s;
 }
 
-.container {
+.main_container {
     text-align: center;
     padding: 20px;
     background-color: white;
@@ -27,6 +27,8 @@ body {
     max-width: 600px;
     width: 90%;
 }
+
+
 
 .image-box {
     width: 400px;

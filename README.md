@@ -22,4 +22,6 @@
 - rearrange buttons and containers to maximize cat img size
 - add a small pop-up to explain how things work
 - decide on theme to be more charming
-- 
+
+2/25/025 8:13PM
+- I want to add a light/dark mode toggle switch that has a cat in it depending on which mode. An orange cat when it's light mode, a black/gray cat when it's dark mode. idk how to do that but I'll find out.
