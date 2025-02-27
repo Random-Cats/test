@@ -1,0 +1,18 @@
+==================================================
+Duplicate Image Report - 02/26/25 23:11:11:PM
+--------------------------------------------------
+
+Duplicate Set 1:
+  cat-chef copy.png
+  cat-chef.png
+
+Duplicate Set 2:
+  image1 copy.png
+  image1.png
+
+Duplicate Set 3:
+  image3 copy.png
+  image3.png
+
+==================================================
+
