@@ -144,11 +144,11 @@ function downloadCurrentImage() {
     // Create a temporary link
     const link = document.createElement('a');
     link.href = imgUrl;
-    
+
     // Get the filename from the URL
     const filename = imgUrl.split('/').pop();
     link.download = filename;
-    
+
     // Trigger download
     document.body.appendChild(link);
     link.click();
