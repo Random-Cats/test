@@ -1,0 +1,22 @@
+==================================================
+Duplicate Image Report - 02/28/25 00:10:09:AM
+--------------------------------------------------
+
+Duplicate Set 1:
+  cat-chef.png
+  hfgccghfsz.png
+
+Duplicate Set 2:
+  fghdghfxgcfh.png
+  image1.png
+
+Duplicate Set 3:
+  fucytrfudytdfiyugt.png
+  image9.png
+
+Duplicate Set 4:
+  image3.png
+  jvkhyugfcjhgyfdciu.png
+
+==================================================
+
