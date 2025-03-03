@@ -16,6 +16,7 @@ let lastClickTime = 0;
 let seenImages = new Set(getCookie('seenImages')?.split(',').filter(Boolean) || []);
 
 let images = [];
+let preloadedImages = [];
 
 function getCookie(name) {
     const value = `; ${document.cookie}`;
@@ -55,32 +56,48 @@ async function handleCatButtonClick() {
     // Update local click display
     document.getElementById('localClickCounter').textContent = localClicks;
 
-    // Handle image selection
 }
 
 async function showRandomCatImage() {
-    // This assumes you have an array of all possible image URLs
-    const allImages = await getAllImageUrls(); 
-    
+    const allImages = await getAllImageUrls();
+
     // Reset if all images have been seen
     if (seenImages.size >= allImages.length) {
         seenImages.clear();
         setCookie('seenImages', '', COOKIE_EXPIRY_DAYS);
     }
 
-    // Find an unseen image
-    let availableImages = allImages.filter(img => !seenImages.has(img));
-    let selectedImage = availableImages[Math.floor(Math.random() * availableImages.length)];
+    // If preloaded images are empty, preload the next 6
+    if (preloadedImages.length === 0) {
+        preloadNextImages(6);
+        console.log("next 6 images")
+    }
+
+    // Use the first preloaded image
+    let selectedImage = preloadedImages.shift();
 
     // Update seen images
     seenImages.add(selectedImage);
     setCookie('seenImages', Array.from(seenImages).join(','), COOKIE_EXPIRY_DAYS);
 
     // Display the image
-    document.getElementById('catImage').src = 'Cat-Imgs/'+selectedImage;
+    document.getElementById('catImage').src = 'Cat-Imgs/' + selectedImage;
 }
 
-// Initial setup
+// Function to preload next `count` images
+function preloadNextImages(count) {
+    const allImages = images.length > 0 ? images : getAllImageUrls();
+    let availableImages = allImages.filter(img => !seenImages.has(img));
+
+    let numToPreload = Math.min(count, availableImages.length);
+    for (let i = 0; i < numToPreload; i++) {
+        let imgSrc = availableImages[i];
+        let img = new Image();
+        img.src = 'Cat-Imgs/' + imgSrc; // Preload the image
+        preloadedImages.push(imgSrc);
+    }
+}
+
 window.onload = async () => {
     // Initialize click counters
     const localClicks = localStorage.getItem('catButtonClicks') || '0';
@@ -121,7 +138,6 @@ async function getAllImageUrls() {
 }
 
 
-// In your JavaScript file
 function toggleTheme() {
     document.body.classList.toggle('light-mode');
     localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
@@ -133,8 +149,6 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.classList.add('light-mode');
     }
 });
-
-
 
 function downloadCurrentImage() {
     // Get the current image
