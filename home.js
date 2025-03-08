@@ -146,7 +146,11 @@ function toggleTheme() {
 document.addEventListener('DOMContentLoaded', () => {
     if (localStorage.getItem('theme') === 'light') {
         document.body.classList.add('light-mode');
+		document.getElementById('toggle').checked = false;
     }
+	else {
+		document.getElementById('toggle').checked = true;
+	}
 });
 
 function downloadCurrentImage() {

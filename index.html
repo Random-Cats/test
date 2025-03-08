@@ -24,16 +24,14 @@
         </div>
         <div class="options">
             <button class="option-btn btn" onclick="downloadCurrentImage()">Download Image</button>
-            <!-- <button class="option-btn btn" onclick="toggleTheme()">Toggle Theme</button> -->
-            <!-- <label class="switch">
-                <input type="checkbox" onclick="toggleTheme()">
-                <span class="slider round"></span>
-			</label> -->
-			<div class="switch_btn btn">
-				<input type="checkbox" class="btn_input" name="toggle" id="toggle" onclick="toggleTheme()">
-				<div class="circle circle2">
-					<img class="circle-icon light" src="SVGs/cat-light.svg" alt="light mode">
-					<img class="circle-icon dark" src="SVGs/cat-dark.svg" alt="dark mode">
+			<div class="option-theme">
+				<div class="theme-label">Theme:</div>
+				<div class="switch_btn btn">
+					<input type="checkbox" class="btn_input" name="toggle" id="toggle" onclick="toggleTheme()">
+					<div class="circle">
+						<img class="circle-icon light" src="SVGs/cat-light.svg" alt="light mode">
+						<img class="circle-icon dark" src="SVGs/cat-dark.svg" alt="dark mode">
+					</div>
 				</div>
 			</div>
         </div>
