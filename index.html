@@ -12,23 +12,30 @@
 <body>
     <div class="main_container">
         <div class="image-box">
-            <img id="catImage" src="/Cat-Imgs/" alt="Random Image">
+            <img id="catImage" src="Cat-Imgs/" alt="Random Image">
         </div>
 
-        <button class="click-button" id="catButton" onclick="handleCatButtonClick()">Click Me!</button>
+        <button class="click-button btn" id="catButton" onclick="handleCatButtonClick()">Click Me!</button>
 
         <div class="counter-display">
             <p>Your Clicks: <span id="localClickCounter">0</span></p>
             <p>Global Clicks: <span id="globalClickCounter">0</span></p>
             <p>Total Images: <span id="total_images">0</span></p>
         </div>
-        <div>
-            <button onclick="downloadCurrentImage()">Download Image</button>
-            <button onclick="toggleTheme()">Toggle Theme</button>
-            <label class="switch">
+        <div class="options">
+            <button class="option-btn btn" onclick="downloadCurrentImage()">Download Image</button>
+            <!-- <button class="option-btn btn" onclick="toggleTheme()">Toggle Theme</button> -->
+            <!-- <label class="switch">
                 <input type="checkbox" onclick="toggleTheme()">
                 <span class="slider round"></span>
-              </label>
+			</label> -->
+			<div class="switch_btn btn">
+				<input type="checkbox" class="btn_input" name="toggle" id="toggle" onclick="toggleTheme()">
+				<div class="circle circle2">
+					<img class="circle-icon light" src="SVGs/cat-light.svg" alt="light mode">
+					<img class="circle-icon dark" src="SVGs/cat-dark.svg" alt="dark mode">
+				</div>
+			</div>
         </div>
     </div>
 

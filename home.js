@@ -137,7 +137,6 @@ async function getAllImageUrls() {
     }
 }
 
-
 function toggleTheme() {
     document.body.classList.toggle('light-mode');
     localStorage.setItem('theme', document.body.classList.contains('light-mode') ? 'light' : 'dark');
