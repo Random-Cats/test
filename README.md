@@ -1,3 +1,7 @@
+---
+created: 23 Feb 2025 2:43PM
+updated: 11 Mar 2025 8:05PM
+---
 # Future Features List
 - [x] Shows global click count
 - [x] Shows local user click count
@@ -45,3 +49,8 @@
 - still need to add a preloader thing so it loads the next 5-6 images instead of only 1 at a time
 - I want to change the html so the images will display fully without being cut off on the sides or the top. Will work on that later
 - turns out the total Action time is 35 days (I think) so I shouldn't be too worried about git-pushing and publishing. Once it's automated though I will need to account for that. Right now in the beginning phases it's ok.
+
+
+**3/11/2025 8:03PM**
+- a friend helped me fix them theme toggle button, it works great so far! The only fix I think it needs is on mobile, a blue box appears when tapping on it. On desktop it has no issues.
+- I did notice when clicking through the site, that it shows the cat images in the same order for everyone. I'll need to take a look at it to ensure it's actually random for everyone.
