@@ -14,7 +14,6 @@ let lastClickTime = 0;
 
 // Initialize seen images set from cookie on load
 let seenImages = new Set(getCookie('seenImages')?.split(',').filter(Boolean) || []);
-
 let images = [];
 let preloadedImages = [];
 
@@ -55,7 +54,6 @@ async function handleCatButtonClick() {
 
     // Update local click display
     document.getElementById('localClickCounter').textContent = localClicks;
-
 }
 
 async function showRandomCatImage() {
@@ -82,6 +80,7 @@ async function showRandomCatImage() {
 
     // Display the image
     document.getElementById('catImage').src = 'Cat-Imgs/' + selectedImage;
+    console.log("loaded")
 }
 
 // Function to preload next `count` images
@@ -102,9 +101,7 @@ window.onload = async () => {
     // Initialize click counters
     const localClicks = localStorage.getItem('catButtonClicks') || '0';
     document.getElementById('localClickCounter').textContent = localClicks;
-
     displayGlobalClicks();
-
     // Add click handler
     document.getElementById('catButton').addEventListener('click', handleCatButtonClick);
 };
@@ -171,11 +168,5 @@ function downloadCurrentImage() {
     link.click();
     document.body.removeChild(link);
 }
-
-
-
-
-
-
 
 

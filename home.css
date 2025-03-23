@@ -93,6 +93,18 @@ body.light-mode .main_container {
   background-color: #424770;
 }
 
+.option-btn2 {
+  height: var(--option-btn-height);
+  padding: 0 20px;
+  font-size: 14px;
+  background-color: #c88c15;
+  color: white;
+}
+
+.option-btn2:hover {
+  background-color: #c88c15;
+}
+
 .click-button:hover {
   background-color: #45a049;
 }
