@@ -114,7 +114,7 @@ body.light-mode .main_container {
   font-size: 16px;
 }
 
-.cool-space {
+/* .cool-space {
   margin: 20px 0;
   padding: 20px;
   background-color: #f8f9fa;
@@ -125,7 +125,7 @@ body.light-mode .main_container {
   display: flex;
   align-items: center;
   justify-content: center;
-}
+} */
 
 .options {
   display: flex;
@@ -230,3 +230,6 @@ body.light-mode .main_container {
 .switch_btn:has(input:checked) .circle-icon.light {
   opacity: 0;
 }
+
+
+

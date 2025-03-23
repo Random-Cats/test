@@ -104,6 +104,7 @@ window.onload = async () => {
     displayGlobalClicks();
     // Add click handler
     document.getElementById('catButton').addEventListener('click', handleCatButtonClick);
+    showRandomCatImage();
 };
 
 function displayGlobalClicks(n){
@@ -127,11 +128,21 @@ async function getAllImageUrls() {
         let req = await fetch('paths.txt', { cache: "no-store" });
         let text = await req.text();
         images = text.split('\n').filter(e=>e);
+        shuffleArray(images);
         document.querySelector('#total_images').innerHTML = images.length;
         return images;
     } else {
         return images;
     }
+}
+
+// Utility function to shuffle an array (Fisher-Yates shuffle)
+function shuffleArray(array) {
+    for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]]; // Swap elements
+    }
+    console.log("images shuffled!")
 }
 
 function toggleTheme() {
