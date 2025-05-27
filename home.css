@@ -93,6 +93,18 @@ body.light-mode .main_container {
   background-color: #424770;
 }
 
+.back-btn {
+  height: var(--option-btn-height);
+  padding: 0 20px;
+  font-size: 14px;
+  background-color: #a44f4f;
+  color: white;
+}
+
+.back-btn:hover {
+  background-color: #a44f4f;
+}
+
 .option-btn2 {
   height: var(--option-btn-height);
   padding: 0 20px;
@@ -218,5 +230,27 @@ body.light-mode .main_container {
   opacity: 0;
 }
 
+.toast {
+  visibility: hidden;
+  min-width: 200px;
+  background-color: #333;
+  color: #fff;
+  text-align: center;
+  border-radius: 8px;
+  padding: 12px;
+  position: fixed;
+  z-index: 9999;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 16px;
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.toast.show {
+  visibility: visible;
+  opacity: 1;
+}
 
 

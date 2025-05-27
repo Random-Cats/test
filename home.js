@@ -16,6 +16,9 @@ let lastClickTime = 0;
 let seenImages = new Set(getCookie('seenImages')?.split(',').filter(Boolean) || []);
 let images = [];
 let preloadedImages = [];
+let imageHistory = [];
+let historyIndex = -1;
+
 
 function getCookie(name) {
     const value = `; ${document.cookie}`;
@@ -68,7 +71,7 @@ async function showRandomCatImage() {
     // If preloaded images are empty, preload the next 6
     if (preloadedImages.length === 0) {
         preloadNextImages(6);
-        console.log("next 6 images")
+        console.log("next 6 images");
     }
 
     // Use the first preloaded image
@@ -78,10 +81,16 @@ async function showRandomCatImage() {
     seenImages.add(selectedImage);
     setCookie('seenImages', Array.from(seenImages).join(','), COOKIE_EXPIRY_DAYS);
 
-    // Display the image
-    document.getElementById('catImage').src = 'Cat-Imgs/' + selectedImage;
-    console.log("loaded")
+    // Save to history
+    const fullPath = 'Cat-Imgs/' + selectedImage;
+    imageHistory.push(fullPath);
+    historyIndex = imageHistory.length - 1;
+
+    // Show image
+    document.getElementById('catImage').src = fullPath;
+    console.log("loaded", fullPath);
 }
+
 
 // Function to preload next `count` images
 function preloadNextImages(count) {
@@ -97,6 +106,19 @@ function preloadNextImages(count) {
     }
 }
 
+function showPreviousImage() {
+    if (historyIndex > 0) {
+        historyIndex--;
+        const previousImage = imageHistory[historyIndex];
+        document.getElementById('catImage').src = previousImage;
+        console.log("went back to", previousImage);
+    } else {
+        showToast("No previous image!");
+    }
+}
+
+
+
 window.onload = async () => {
     // Initialize click counters
     const localClicks = localStorage.getItem('catButtonClicks') || '0';
@@ -105,6 +127,8 @@ window.onload = async () => {
     // Add click handler
     document.getElementById('catButton').addEventListener('click', handleCatButtonClick);
     showRandomCatImage();
+    document.getElementById('backButton').addEventListener('click', showPreviousImage);
+
 };
 
 function displayGlobalClicks(n){
@@ -161,6 +185,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 });
 
+
 function downloadCurrentImage() {
     // Get the current image
     const img = document.getElementById('catImage');
@@ -180,4 +205,12 @@ function downloadCurrentImage() {
     document.body.removeChild(link);
 }
 
+function showToast(message, duration = 1000) {
+    const toast = document.getElementById('toast');
+    toast.textContent = message;
+    toast.classList.add('show');
+    setTimeout(() => {
+        toast.classList.remove('show');
+    }, duration);
+}
 

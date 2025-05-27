@@ -1,0 +1,30 @@
+==================================================
+Duplicate Image Report - 05/26/25 20:26:27:PM
+--------------------------------------------------
+
+Duplicate Set 1:
+  Cat_00004.png
+  Cat_00007.png
+
+Duplicate Set 2:
+  Cat_00005.png
+  Cat_00008.png
+
+Duplicate Set 3:
+  Cat_00006.png
+  Cat_00108.png
+
+Duplicate Set 4:
+  Cat_00038.png
+  Cat_00151.png
+
+Duplicate Set 5:
+  Cat_00042.png
+  Cat_00119.png
+
+Duplicate Set 6:
+  Cat_00107.png
+  Cat_00152.png
+
+==================================================
+

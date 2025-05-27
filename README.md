@@ -54,3 +54,9 @@ updated: 11 Mar 2025 8:05PM
 **3/11/2025 8:03PM**
 - a friend helped me fix them theme toggle button, it works great so far! The only fix I think it needs is on mobile, a blue box appears when tapping on it. On desktop it has no issues.
 - I did notice when clicking through the site, that it shows the cat images in the same order for everyone. I'll need to take a look at it to ensure it's actually random for everyone.
+
+**5/26/2025 9:54pm**
+- I added a back button, but it doesn't work correctly. I don't fully know what's going on with it, but it loads a new image when you go back and then forward. I want it to keep the queue of images until it actually gets to a "new" one.
+- I added a toast thing that appears if the back button is pressed and there is no image to go back to.
+- renamed all cat pics to something like Cat_00000 with a new rename_files.py
+- updated paths.txt with 'bash code.sh' (will still need to update later so I don't have to manually do it)
