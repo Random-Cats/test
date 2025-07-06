@@ -2,32 +2,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <title>Image Submitter</title>
+    <script src="https://www.google.com/recaptcha/api.js?render=6LelWXkrAAAAACAaeeBfBlosh9MlzcKRJ2zNA82T"></script>
+    <script src="https://cdn.jsdelivr.net/npm/nsfwjs@latest/dist/nsfwjs.min.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WIP Rando Cat Site</title>
-    <link rel="stylesheet" href="home.css">
-    <script src="home.js"></script>
+    <link rel="stylesheet" href="submit.css">
+    <script src="submit.js"></script>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1461308207165881"
      crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="main_container">
-        <div class="image-box">
-            <img id="catImage" src="Cat-Imgs/">
-        </div>
-
-        <button class="back-btn btn" id="backButton">Go Back</button>
-        <button class="forward-btn btn" id="forward-btn" onclick="alert('forward button does not work yet')">Go Forward</button>
-        <button class="click-button btn" id="catButton" onclick="handleCatButtonClick()">Show random cat!</button>
-
-
-        <div class="counter-display">
-            <p>Your Clicks: <span id="localClickCounter">0</span></p>
-            <p>Global Clicks: <span id="globalClickCounter">0</span></p>
-            <p>Total Cat Pics: <span id="total_images">0</span></p>
-        </div>
+    <h2>Submit an Image</h2>
+        <form id="upload-form">
+            <input type="file" id="image-file" accept="image/jpeg, image/png">
+            <button type="submit">Submit Image</button>
+        </form>
+    <div id="status-message"></div>
         <div class="options">
-            <button class="option-btn btn" onclick="downloadCurrentImage()">Download Image</button>
-            <button class="option-btn2 btn" onclick="window.open('submit.html')">Submit a cat pic!</button>
+            <button class="option-btn2 btn" onclick="window.open('index.html')">Look at cat pics!</button>
 			<div class="option-theme">
 				<div class="theme-label">Theme:</div>
 				<div class="switch_btn btn">
@@ -40,7 +33,6 @@
 			</div>
         </div>
     </div>
-
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1461308207165881"
     crossorigin="anonymous"></script>
     <!-- Ad -->
@@ -54,23 +46,9 @@
         (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
 
-<div id="toast" class="toast">No previous image!</div>
+<!-- <div id="toast" class="toast">No previous image!</div> -->
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

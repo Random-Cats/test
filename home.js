@@ -44,7 +44,7 @@ async function handleCatButtonClick() {
     // Update local storage count
     let localClicks = parseInt(localStorage.getItem('catButtonClicks') || '0');
     localStorage.setItem('catButtonClicks', ++localClicks);
-    
+
     // Update CountAPI (global count)
     try {
         fetch('https://msouthwick.com/command.add-cat-click').then(async response=>{

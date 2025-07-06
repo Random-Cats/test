@@ -105,19 +105,6 @@ body.light-mode .main_container {
   background-color: #a44f4f;
 }
 
-.forward-btn {
-  height: var(--option-btn-height);
-  padding: 0 20px;
-  font-size: 14px;
-  background-color: #104eac;
-  color: white;
-}
-
-.forward-btn:hover {
-  background-color: #104eac;
-}
-
-
 .option-btn2 {
   height: var(--option-btn-height);
   padding: 0 20px;
