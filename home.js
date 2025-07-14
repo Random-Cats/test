@@ -108,16 +108,34 @@ function preloadNextImages(count) {
 
 function showPreviousImage() {
     if (historyIndex > 0) {
-        historyIndex--;
-        const previousImage = imageHistory[historyIndex];
+        viewPlace = historyIndex--;
+        const previousImage = imageHistory[viewPlace];
         document.getElementById('catImage').src = previousImage;
         console.log("went back to", previousImage);
+        showToast("previous image button doesn't fully work yet")
     } else {
-        showToast("No previous image!");
+        showToast("No previous image!")
+        showToast("previous image button doesn't fully work yet")
     }
 }
 
+function showNextImage() {
+    if (historyIndex > 0) {
+        viewPlace = historyIndex++;
+        const previousImage = imageHistory[viewPlace];
+        document.getElementById('catImage').src = previousImage;
+        console.log("went forward to", previousImage);
+        showToast("Go Forward button doesn't fully work yet")
+    } else {
+        // showToast("No next image!")
+        showToast("Go Forward button doesn't fully work yet")
+    }
+}
 
+function printHistoryIndex() {
+    console.log(historyIndex)
+    console.log(imageHistory)
+}
 
 window.onload = async () => {
     // Initialize click counters
@@ -128,6 +146,7 @@ window.onload = async () => {
     document.getElementById('catButton').addEventListener('click', handleCatButtonClick);
     showRandomCatImage();
     document.getElementById('backButton').addEventListener('click', showPreviousImage);
+    document.getElementById('forward-btn').addEventListener('click', showNextImage);
 
 };
 
