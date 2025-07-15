@@ -1,8 +1,8 @@
 Cat_00001.jpg
 Cat_00002.jpg
 Cat_00003.jpg
-Cat_00004.png
-Cat_00005.png
+Cat_00004.jpg
+Cat_00005.jpg
 Cat_00006.png
 Cat_00007.png
 Cat_00008.png
@@ -58,7 +58,7 @@ Cat_00057.png
 Cat_00058.png
 Cat_00059.png
 Cat_00060.png
-Cat_00061.png
+Cat_00061.jpg
 Cat_00062.png
 Cat_00063.png
 Cat_00064.png
@@ -111,10 +111,10 @@ Cat_00110.png
 Cat_00111.png
 Cat_00112.png
 Cat_00113.png
-Cat_00114.jpg
-Cat_00115.png
+Cat_00114.png
+Cat_00115.jpg
 Cat_00116.png
-Cat_00117.jpg
+Cat_00117.png
 Cat_00118.jpg
 Cat_00119.jpg
 Cat_00120.jpg
@@ -132,7 +132,7 @@ Cat_00131.jpg
 Cat_00132.jpg
 Cat_00133.jpg
 Cat_00134.jpg
-Cat_00135.jpg
+Cat_00135.png
 Cat_00136.png
 Cat_00137.png
 Cat_00138.png
@@ -143,5 +143,4 @@ Cat_00142.png
 Cat_00143.png
 Cat_00144.png
 Cat_00145.png
-Cat_00146.png
-Cat_00147.jpeg
+Cat_00146.jpeg
