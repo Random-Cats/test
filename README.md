@@ -3,14 +3,18 @@ created: 23 Feb 2025 2:43PM
 updated: 11 Mar 2025 8:05PM
 ---
 # Future Features List
-- [x] Shows global click count
+- [ ] Shows global click count
 - [x] Shows local user click count
-- [x] Download button
+- [x] Download image button
 - [x] Dark & Light Mode
-- [ ] Discord bot that periodically adds images from a specific channel periodically
-- [ ] Auto sorts for duplicate images
-- [ ] How the site works tab for users to see
-- [ ] maybe add background cat music potentially?
+- [x] Forward & back button to see previously seen images
+- [ ] User image submission page that connects to AWS S3 Bucket & Lambda stuffs
+- [ ] AWS Lambda & S3 Bucket to sort submitted images and push to github
+- [ ] Feedback form for bugs/suggestions/features/etc (that also connects to AWS stuff)
+- [ ] Dashboard type page I can access in AWS to help manage submitted images, view feedback, view statistics, etc.
+~- [ ] Discord bot that periodically adds images from a specific channel periodically~
+~- [ ] How the site works tab for users to see~
+~- [ ] maybe add background cat music potentially?~
 
 
 # Devlog
@@ -60,3 +64,9 @@ updated: 11 Mar 2025 8:05PM
 - I added a toast thing that appears if the back button is pressed and there is no image to go back to.
 - renamed all cat pics to something like Cat_00000 with a new rename_files.py
 - updated paths.txt with 'bash code.sh' (will still need to update later so I don't have to manually do it)
+
+**7/31/2025 1:55 PM**
+- fixed the back and forward buttons
+- added a feedback button, need to adjust location on screen
+- changed "click for random cat" button to just a 🎲 emoji. The name of the website should be pretty clear as to what should happen
+- I really want to get this site working so I can hopefully get approved for google adsense and help pay for college. If people use adblock that's fine with me, I use it too lol

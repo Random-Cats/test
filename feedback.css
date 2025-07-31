@@ -42,7 +42,7 @@ body.light-mode .main_container {
 
 .image-box {
   width: 100%;
-  height: 500px; /* Set a fixed height */
+  height: 400px; /* Set a fixed height */
   margin: auto;
   display: flex;
   justify-content: center;
@@ -104,19 +104,6 @@ body.light-mode .main_container {
 .back-btn:hover {
   background-color: #a44f4f;
 }
-
-.forward-btn {
-  height: var(--option-btn-height);
-  padding: 0 20px;
-  font-size: 14px;
-  background-color: #104eac;
-  color: white;
-}
-
-.forward-btn:hover {
-  background-color: #104eac;
-}
-
 
 .option-btn2 {
   height: var(--option-btn-height);
@@ -267,13 +254,3 @@ body.light-mode .main_container {
 }
 
 
-.option-btn3 {
-  height: var(--option-btn-height);
-  padding: 0 20px;
-  position: relative;
-  right: 10px;
-  bottom: 10px;
-  font-size: 14px;
-  background-color: #a527a8;
-  color: white;
-}
