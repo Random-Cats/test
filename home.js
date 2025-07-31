@@ -70,7 +70,7 @@ async function showRandomCatImage() {
 
     // If preloaded images are empty, preload the next 6
     if (preloadedImages.length === 0) {
-        preloadNextImages(6);
+        await preloadNextImages(6);
         console.log("next 6 images");
     }
 
@@ -88,13 +88,14 @@ async function showRandomCatImage() {
 
     // Show image
     document.getElementById('catImage').src = fullPath;
-    console.log("loaded", fullPath);
+    console.log("Show Random Cat Button was pressed")
+    console.log("loaded image:", fullPath);
 }
 
 
 // Function to preload next `count` images
-function preloadNextImages(count) {
-    const allImages = images.length > 0 ? images : getAllImageUrls();
+async function preloadNextImages(count) {
+    const allImages = await getAllImageUrls(); // Ensure this is fully loaded
     let availableImages = allImages.filter(img => !seenImages.has(img));
 
     let numToPreload = Math.min(count, availableImages.length);
@@ -108,34 +109,37 @@ function preloadNextImages(count) {
 
 function showPreviousImage() {
     if (historyIndex > 0) {
-        viewPlace = historyIndex--;
-        const previousImage = imageHistory[viewPlace];
+        historyIndex--;
+        const previousImage = imageHistory[historyIndex];
         document.getElementById('catImage').src = previousImage;
-        console.log("went back to", previousImage);
-        showToast("previous image button doesn't fully work yet")
+        console.log("Go Back button was pressed")
+        console.log("went back to:", previousImage);
     } else {
+        console.log("Go Back button was pressed")
+        console.log("No previous image!")
         showToast("No previous image!")
-        showToast("previous image button doesn't fully work yet")
     }
 }
 
 function showNextImage() {
-    if (historyIndex > 0) {
-        viewPlace = historyIndex++;
-        const previousImage = imageHistory[viewPlace];
-        document.getElementById('catImage').src = previousImage;
-        console.log("went forward to", previousImage);
-        showToast("Go Forward button doesn't fully work yet")
+    if (historyIndex < imageHistory.length - 1) {
+        historyIndex++;  // Move forward
+        const nextImage = imageHistory[historyIndex];
+        document.getElementById('catImage').src = nextImage;
+        console.log("Go Forward button was pressed")
+        console.log("went forward to:", nextImage);
     } else {
-        // showToast("No next image!")
-        showToast("Go Forward button doesn't fully work yet")
+        console.log("Go Forward button was pressed")
+        console.log("No next image!")
+        showToast("No next image!")
     }
 }
 
-function printHistoryIndex() {
-    console.log(historyIndex)
-    console.log(imageHistory)
-}
+// function printHistoryIndex() {
+//     console.log("printHistoryIndex was pressed")
+//     console.log("historyIndex =", historyIndex)
+//     console.log("historyHistory =",imageHistory)
+// }
 
 window.onload = async () => {
     // Initialize click counters
@@ -163,8 +167,6 @@ function displayGlobalClicks(n){
         console.error('Error fetching global click count:', error);
     }
 }
-
-getAllImageUrls();
 
 async function getAllImageUrls() {
     if(images.length == 0){
