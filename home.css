@@ -28,6 +28,7 @@ body.light-mode .main_container {
 }
 
 .main_container {
+  justify-content: center;
   text-align: center;
   padding: 20px;
   background-color: #595959;
@@ -259,6 +260,10 @@ body.light-mode .main_container {
   font-size: 16px;
   opacity: 0;
   transition: opacity 0.5s ease-in-out;
+  -webkit-transition: opacity 0.5s ease-in-out;
+  -moz-transition: opacity 0.5s ease-in-out;
+  -ms-transition: opacity 0.5s ease-in-out;
+  -o-transition: opacity 0.5s ease-in-out;
 }
 
 .toast.show {
@@ -268,6 +273,8 @@ body.light-mode .main_container {
 
 
 .option-btn3 {
+  align-items: center;
+  justify-content: center;
   height: var(--option-btn-height);
   padding: 0 20px;
   position: relative;
@@ -277,3 +284,5 @@ body.light-mode .main_container {
   background-color: #a527a8;
   color: white;
 }
+
+
