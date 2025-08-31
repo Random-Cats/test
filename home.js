@@ -88,6 +88,7 @@ async function showRandomCatImage() {
 
     // Show image
     document.getElementById('catImage').src = fullPath;
+    updateSidebar();
     console.log("Show Random Cat Button was pressed")
     console.log("loaded image:", fullPath);
 }
@@ -112,6 +113,7 @@ function showPreviousImage() {
         historyIndex--;
         const previousImage = imageHistory[historyIndex];
         document.getElementById('catImage').src = previousImage;
+        updateSidebar();
         console.log("Go Back button was pressed")
         console.log("went back to:", previousImage);
     } else {
@@ -126,12 +128,38 @@ function showNextImage() {
         historyIndex++;  // Move forward
         const nextImage = imageHistory[historyIndex];
         document.getElementById('catImage').src = nextImage;
+        updateSidebar();
         console.log("Go Forward button was pressed")
         console.log("went forward to:", nextImage);
     } else {
         console.log("Go Forward button was pressed")
         console.log("No next image!")
         showToast("No next image!")
+    }
+}
+
+function updateSidebar() {
+    const sidebar = document.getElementById("historySidebar");
+    sidebar.innerHTML = "";
+
+    // newest → oldest
+    for (let index = imageHistory.length - 1; index >= 0; index--) {
+        const imgUrl = imageHistory[index];
+        const thumb = document.createElement("img");
+        thumb.src = imgUrl;
+
+        if (index === historyIndex) {
+            thumb.classList.add("active");
+        }
+
+        thumb.addEventListener("click", () => {
+            historyIndex = index;
+            document.getElementById("catImage").src = imgUrl;
+            updateSidebar();
+        });
+
+        // Append so CSS grid auto-places it
+        sidebar.appendChild(thumb);
     }
 }
 

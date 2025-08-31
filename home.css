@@ -56,6 +56,13 @@ body.light-mode .main_container {
   object-fit: cover;
 }
 
+.button-box {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
 /* Buttons */
 .btn {
   border: none;
@@ -71,8 +78,8 @@ body.light-mode .main_container {
 }
 
 .click-button {
-  padding: 15px 30px;
-  font-size: 18px;
+  padding: 10px 15px;
+  font-size: 30px;
   background-color: #4caf50;
   color: white;
 }
@@ -276,4 +283,64 @@ body.light-mode .main_container {
   font-size: 14px;
   background-color: #a527a8;
   color: white;
+}
+body {
+  margin: 0;
+  font-family: sans-serif;
+  display: flex;
+}
+
+.sidebar {
+  width: 360px; /* 3 thumbnails wide */
+  border-right: 2px solid #333;
+  padding: 10px;
+  overflow-y: auto;
+  height: 100vh;
+  position: fixed;
+  left: 0;
+  top: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-auto-rows: 100px; /* 🔑 fixed row height */
+  gap: 8px;
+  direction: rtl;
+}
+
+/* Main content stays fixed size, ignores sidebar growth */
+.main-container {
+  margin-left: 380px; /* leaves space for sidebar */
+  padding: 20px;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.main-container img {
+  max-width: 500px;
+  max-height: 500px;
+  object-fit: contain;
+  border: 2px solid #ccc;
+  border-radius: 8px;
+}
+
+/* Sidebar thumbnails */
+.sidebar img {
+  width: 100%;
+  height: 100%;        /* 🔑 ensures consistent row height */
+  object-fit: cover;   /* crop to fill square */
+  border-radius: 6px;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: 0.2s;
+  direction: ltr;
+}
+
+.sidebar img:hover {
+  opacity: 0.9;
+}
+
+.sidebar img.active {
+  border: 2px solid #4da6ff;
+  opacity: 1;
 }
