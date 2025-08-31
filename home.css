@@ -317,10 +317,6 @@ body {
 .main-container {
   margin-left: 380px; /* leaves space for sidebar */
   padding: 20px;
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
 }
 
 .main-container img {
@@ -329,6 +325,23 @@ body {
   object-fit: contain;
   border: 2px solid #ccc;
   border-radius: 8px;
+}
+
+/* 🔑 Mobile overrides */
+@media (max-width: 768px) {
+  .sidebar {
+    position: relative;   /* no longer fixed */
+    width: 100%;          /* full width */
+    height: auto;         /* grows naturally */
+    border-right: none;
+    border-top: 2px solid #333;
+    margin-top: 20px;
+    grid-template-columns: repeat(3, 1fr); /* still 3 across */
+  }
+
+  .main-container {
+    margin-left: 0;  /* remove offset */
+  }
 }
 
 /* Sidebar thumbnails */
