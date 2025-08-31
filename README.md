@@ -13,9 +13,9 @@ updated: 11 Mar 2025 8:05PM
 - [ ] AWS Lambda & S3 Bucket to sort submitted images and push to github
 - [ ] Feedback form for bugs/suggestions/features/etc (that also connects to AWS stuff)
 - [ ] Dashboard type page I can access in AWS to help manage submitted images, view feedback, view statistics, etc.
-~- [ ] Discord bot that periodically adds images from a specific channel periodically~
-~- [ ] How the site works tab for users to see~
-~- [ ] maybe add background cat music potentially?~
+- [ ] ~Discord bot that periodically adds images from a specific channel periodically~
+- [ ] ~How the site works tab for users to see~
+- [ ] ~maybe add background cat music potentially?~
 
 
 # Devlog
