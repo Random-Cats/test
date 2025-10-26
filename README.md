@@ -8,6 +8,7 @@ updated: 11 Mar 2025 8:05PM
 - [x] Download image button
 - [x] Dark & Light Mode
 - [x] Forward & back button to see previously seen images
+- [x] Side bar that shows images the user has seen, and highlights which image they are viewing in their queue, depending on if they've pressed the forward or back button or not. Ability to click on image to jump back to it for viewing.
 - [ ] User image submission page that connects to AWS S3 Bucket & Lambda stuffs
 - [ ] AWS Lambda & S3 Bucket to sort submitted images and push to github
 - [ ] Feedback form for bugs/suggestions/features/etc (that also connects to AWS stuff)
@@ -67,6 +68,12 @@ updated: 11 Mar 2025 8:05PM
 
 **7/31/2025 1:55 PM**
 - fixed the back and forward buttons
-- added a feedback button, need to adjust location on screen
-- changed "click for random cat" button to just a 🎲 emoji. The name of the website should be pretty clear as to what should happen
+- added a feedback button, need to adjust location on screen, and actually get that part of the site working
+- changed "click for random cat" button to just a 🎲 emoji. The name of the website should be pretty clear as to what should happen when this button is pressed
 - I really want to get this site working so I can hopefully get approved for google adsense and help pay for college. If people use adblock that's fine with me, I use it too lol
+
+**8/31/2025 4:44 PM**
+- added a sidebar that shows the user what images they have already seen. Users can click on the image to jump back to it and download. Displays the images in reverse order. Most recent cat is displayed in the top right, and reads right to left, top to bottom. The current image being viewed is highlighted in blue. Displays the images in a 3 wide column, images are cropped at about 110px x 100px in each row. I might add a feature for users to resize the row to whatever width they want.
+- sidebar will grow infinitely large as needed
+- replaced "forward" and "back" buttons with ⬅️➡️ instead. When using these buttons, the sidebar image is updated to highlight which image is being viewed
+- I do want to add some sort of "patchnotes" page or "updates" page, so users can see how the site has changed over time.

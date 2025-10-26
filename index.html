@@ -10,16 +10,19 @@
      crossorigin="anonymous"></script>
 </head>
 <body>
+    <div class="viewed-images" style="display: flex;">
+        <div id="historySidebar" class="sidebar"></div>
+
     <div class="main_container">
         <div class="image-box">
             <img id="catImage" src="Cat-Imgs/">
         </div>
-
-        <button class="back-btn btn" id="backButton">Back</button>
+        <div class="button-box">
+        <button class="back-btn btn" id="backButton">⬅️</button>
         <button class="click-button btn" id="catButton" onclick="handleCatButtonClick()">🎲</button>
-        <button class="forward-btn btn" id="forward-btn">Forward</button>
+        <button class="forward-btn btn" id="forward-btn">➡️</button>
         <!-- <button class="back-btn btn" id="backButton" onclick="printHistoryIndex()">printHistoryIndex</button> -->
-
+        </div>
 
         <div class="counter-display">
             <p>Your Clicks: <span id="localClickCounter">0</span></p>
@@ -41,6 +44,8 @@
 			</div>
         </div>
     </div>
+    </div>
+
     <button class="option-btn3 btn" onclick="window.open('feedback.html')">Submit feedback</button>
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1461308207165881"
     crossorigin="anonymous"></script>
