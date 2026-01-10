@@ -1,0 +1,42 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+Desktop.ini
+.vscode/
+.idea/
+*.swp
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Node
+node_modules/
+
+# Env files / secrets
+.env
+.env.*
+*.pem
+*.key
+
+# AWS SAM / CDK
+.aws-sam/
+.sam-build/
+
+# Docker
+**/.docker/
+
+# Test output
+coverage/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Temp
+*.tmp
+*.temp

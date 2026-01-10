@@ -1,0 +1,15 @@
+{
+  "name": "randomcatclicker-ml-process",
+  "version": "0.1.0",
+  "private": true,
+  "type": "commonjs",
+  "main": "app.js",
+  "dependencies": {
+    "@aws-sdk/client-s3": "^3.744.0",
+    "@aws-sdk/client-dynamodb": "^3.744.0",
+    "@aws-sdk/lib-dynamodb": "^3.744.0",
+    "@tensorflow/tfjs-node": "^4.22.0",
+    "nsfwjs": "^4.2.1",
+    "sharp": "^0.33.5"
+  }
+}

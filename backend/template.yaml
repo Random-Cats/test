@@ -1,0 +1,419 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: RandomCatClicker backend (uploads + review + publish)
+
+Globals:
+  Function:
+    Architectures:
+      - x86_64
+    Timeout: 30
+    MemorySize: 512
+    Tracing: Active
+    Environment:
+      Variables:
+        LOG_LEVEL: info
+        METRICS_NAMESPACE: RandomCatClicker
+
+Parameters:
+  AllowedOrigin:
+    Type: String
+    Default: '*'
+    Description: CORS allowed origin (set to your site origin in production)
+
+  GitHubOwner:
+    Type: String
+    Default: ''
+  GitHubRepo:
+    Type: String
+    Default: ''
+  GitHubBranch:
+    Type: String
+    Default: 'main'
+  GitHubTokenSecretArn:
+    Type: String
+    Default: ''
+
+Resources:
+  UploadsBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      CorsConfiguration:
+        CorsRules:
+          - AllowedHeaders: ['*']
+            AllowedMethods: [POST, PUT, GET, HEAD]
+            AllowedOrigins:
+              - !Ref AllowedOrigin
+            MaxAge: 3000
+
+  ImagesTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: PK
+          AttributeType: S
+        - AttributeName: SK
+          AttributeType: S
+        - AttributeName: GSI1PK
+          AttributeType: S
+        - AttributeName: GSI1SK
+          AttributeType: S
+        - AttributeName: GSI2PK
+          AttributeType: S
+        - AttributeName: GSI2SK
+          AttributeType: S
+      KeySchema:
+        - AttributeName: PK
+          KeyType: HASH
+        - AttributeName: SK
+          KeyType: RANGE
+      GlobalSecondaryIndexes:
+        - IndexName: GSI1
+          KeySchema:
+            - AttributeName: GSI1PK
+              KeyType: HASH
+            - AttributeName: GSI1SK
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+        - IndexName: GSI2
+          KeySchema:
+            - AttributeName: GSI2PK
+              KeyType: HASH
+            - AttributeName: GSI2SK
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
+
+  UsersTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      BillingMode: PAY_PER_REQUEST
+      AttributeDefinitions:
+        - AttributeName: PK
+          AttributeType: S
+        - AttributeName: SK
+          AttributeType: S
+      KeySchema:
+        - AttributeName: PK
+          KeyType: HASH
+        - AttributeName: SK
+          KeyType: RANGE
+
+  UserPool:
+    Type: AWS::Cognito::UserPool
+    Properties:
+      UserPoolName: randomcatclicker-users
+      UsernameAttributes:
+        - email
+      AutoVerifiedAttributes:
+        - email
+
+  UserPoolClient:
+    Type: AWS::Cognito::UserPoolClient
+    Properties:
+      UserPoolId: !Ref UserPool
+      ClientName: randomcatclicker-web
+      GenerateSecret: false
+      ExplicitAuthFlows:
+        - ALLOW_USER_SRP_AUTH
+        - ALLOW_REFRESH_TOKEN_AUTH
+        - ALLOW_USER_PASSWORD_AUTH
+
+  AdminGroup:
+    Type: AWS::Cognito::UserPoolGroup
+    Properties:
+      GroupName: admin
+      UserPoolId: !Ref UserPool
+      Description: Admin reviewers
+
+  HttpApi:
+    Type: AWS::Serverless::HttpApi
+    Properties:
+      CorsConfiguration:
+        AllowOrigins:
+          - !Ref AllowedOrigin
+        AllowHeaders:
+          - authorization
+          - content-type
+        AllowMethods:
+          - GET
+          - POST
+          - OPTIONS
+      Auth:
+        Authorizers:
+          CognitoAuthorizer:
+            IdentitySource: "$request.header.Authorization"
+            JwtConfiguration:
+              issuer: !Sub "https://cognito-idp.${AWS::Region}.amazonaws.com/${UserPool}"
+              audience:
+                - !Ref UserPoolClient
+        DefaultAuthorizer: CognitoAuthorizer
+
+  SubmitInitFunction:
+    Type: AWS::Serverless::Function
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        EntryPoints:
+          - src/handlers/submitInit.ts
+        Target: es2022
+        Sourcemap: true
+        Minify: true
+    Properties:
+      Runtime: nodejs20.x
+      CodeUri: .
+      Handler: src/handlers/submitInit.handler
+      Events:
+        Submit:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /images/submit
+            Method: POST
+      Environment:
+        Variables:
+          UPLOADS_BUCKET: !Ref UploadsBucket
+          IMAGES_TABLE: !Ref ImagesTable
+          USERS_TABLE: !Ref UsersTable
+          MAX_UPLOAD_BYTES: '8000000'
+          MAX_SUBMITS_PER_MINUTE: '10'
+          MAX_SUBMITS_PER_DAY: '50'
+      Policies:
+        - S3WritePolicy:
+            BucketName: !Ref UploadsBucket
+        - DynamoDBCrudPolicy:
+            TableName: !Ref ImagesTable
+        - DynamoDBCrudPolicy:
+            TableName: !Ref UsersTable
+
+  GetImageFunction:
+    Type: AWS::Serverless::Function
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        EntryPoints:
+          - src/handlers/getImage.ts
+        Target: es2022
+        Sourcemap: true
+        Minify: true
+    Properties:
+      Runtime: nodejs20.x
+      CodeUri: .
+      Handler: src/handlers/getImage.handler
+      Events:
+        Get:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /images/{imageId}
+            Method: GET
+      Environment:
+        Variables:
+          IMAGES_TABLE: !Ref ImagesTable
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: !Ref ImagesTable
+
+  ListMineFunction:
+    Type: AWS::Serverless::Function
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        EntryPoints:
+          - src/handlers/listMine.ts
+        Target: es2022
+        Sourcemap: true
+        Minify: true
+    Properties:
+      Runtime: nodejs20.x
+      CodeUri: .
+      Handler: src/handlers/listMine.handler
+      Events:
+        List:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /images/mine
+            Method: GET
+      Environment:
+        Variables:
+          IMAGES_TABLE: !Ref ImagesTable
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: !Ref ImagesTable
+
+  AdminListFunction:
+    Type: AWS::Serverless::Function
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        EntryPoints:
+          - src/handlers/adminList.ts
+        Target: es2022
+        Sourcemap: true
+        Minify: true
+    Properties:
+      Runtime: nodejs20.x
+      CodeUri: .
+      Handler: src/handlers/adminList.handler
+      Events:
+        List:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /admin/images
+            Method: GET
+      Environment:
+        Variables:
+          IMAGES_TABLE: !Ref ImagesTable
+      Policies:
+        - DynamoDBReadPolicy:
+            TableName: !Ref ImagesTable
+
+  AdminDecisionFunction:
+    Type: AWS::Serverless::Function
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        EntryPoints:
+          - src/handlers/adminDecision.ts
+        Target: es2022
+        Sourcemap: true
+        Minify: true
+    Properties:
+      Runtime: nodejs20.x
+      CodeUri: .
+      Handler: src/handlers/adminDecision.handler
+      Events:
+        Decide:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /admin/images/{imageId}/decision
+            Method: POST
+      Environment:
+        Variables:
+          IMAGES_TABLE: !Ref ImagesTable
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref ImagesTable
+
+  AdminCommitFunction:
+    Type: AWS::Serverless::Function
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        EntryPoints:
+          - src/handlers/adminCommit.ts
+        Target: es2022
+        Sourcemap: true
+        Minify: true
+    Properties:
+      Runtime: nodejs20.x
+      CodeUri: .
+      Handler: src/handlers/adminCommit.handler
+      Timeout: 60
+      MemorySize: 1024
+      Events:
+        Commit:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /admin/commit
+            Method: POST
+      Environment:
+        Variables:
+          IMAGES_TABLE: !Ref ImagesTable
+          UPLOADS_BUCKET: !Ref UploadsBucket
+          GITHUB_OWNER: !Ref GitHubOwner
+          GITHUB_REPO: !Ref GitHubRepo
+          GITHUB_BRANCH: !Ref GitHubBranch
+          GITHUB_TOKEN_SECRET_ARN: !Ref GitHubTokenSecretArn
+          DELETE_FROM_S3_DEFAULT: 'true'
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref ImagesTable
+        - S3ReadPolicy:
+            BucketName: !Ref UploadsBucket
+        - S3WritePolicy:
+            BucketName: !Ref UploadsBucket
+        - Statement:
+            - Effect: Allow
+              Action:
+                - secretsmanager:GetSecretValue
+              Resource: '*'
+
+  MetricsFunction:
+    Type: AWS::Serverless::Function
+    Metadata:
+      BuildMethod: esbuild
+      BuildProperties:
+        EntryPoints:
+          - src/handlers/metricsEvent.ts
+        Target: es2022
+        Sourcemap: true
+        Minify: true
+    Properties:
+      Runtime: nodejs20.x
+      CodeUri: .
+      Handler: src/handlers/metricsEvent.handler
+      Events:
+        Metrics:
+          Type: HttpApi
+          Properties:
+            ApiId: !Ref HttpApi
+            Path: /metrics/event
+            Method: POST
+            Auth:
+              Authorizer: NONE
+
+  ProcessUploadFunction:
+    Type: AWS::Serverless::Function
+    Metadata:
+      DockerContext: ml-process
+      Dockerfile: Dockerfile
+      DockerTag: node20-nsfwjs
+    Properties:
+      PackageType: Image
+      Timeout: 60
+      MemorySize: 2048
+      Environment:
+        Variables:
+          UPLOADS_BUCKET: !Ref UploadsBucket
+          IMAGES_TABLE: !Ref ImagesTable
+          USERS_TABLE: !Ref UsersTable
+      Policies:
+        - S3ReadPolicy:
+            BucketName: !Ref UploadsBucket
+        - S3WritePolicy:
+            BucketName: !Ref UploadsBucket
+        - DynamoDBCrudPolicy:
+            TableName: !Ref ImagesTable
+        - DynamoDBCrudPolicy:
+            TableName: !Ref UsersTable
+      Events:
+        S3Upload:
+          Type: S3
+          Properties:
+            Bucket: !Ref UploadsBucket
+            Events: s3:ObjectCreated:*
+            Filter:
+              S3Key:
+                Rules:
+                  - Name: prefix
+                    Value: incoming/
+
+Outputs:
+  ApiUrl:
+    Value: !Sub "https://${HttpApi}.execute-api.${AWS::Region}.amazonaws.com"
+  UserPoolId:
+    Value: !Ref UserPool
+  UserPoolClientId:
+    Value: !Ref UserPoolClient
+  UploadsBucketName:
+    Value: !Ref UploadsBucket
+  ImagesTableName:
+    Value: !Ref ImagesTable
+  UsersTableName:
+    Value: !Ref UsersTable
